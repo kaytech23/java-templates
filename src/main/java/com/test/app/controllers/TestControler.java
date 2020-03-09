@@ -20,12 +20,12 @@ public class TestControler {
 
     @GetMapping("/test2")
     public String test2() {
-        return "Test1!";
+        return "Test2!";
     }
 
     @GetMapping("/test3")
     public String test3() {
-        return "Test1!";
+        return "Test3!";
     }
-    
+
 }
