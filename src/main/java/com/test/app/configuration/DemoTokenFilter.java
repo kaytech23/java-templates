@@ -17,6 +17,16 @@ public class DemoTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
 
+        String header = httpServletRequest.getHeader("Authorization");
+
+        if (header != null && header.equalsIgnoreCase("Admin")) {
+            authenticate();
+        }
+
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
+    }
+
+    private void authenticate() {
         Authentication auth = new Authentication() {
             @Override
             public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -54,7 +64,5 @@ public class DemoTokenFilter extends OncePerRequestFilter {
             }
         };
         SecurityContextHolder.getContext().setAuthentication(auth);
-
-        filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
 }
